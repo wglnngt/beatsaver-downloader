@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 func main() {
 	createDir()
 	loadExisting()
@@ -17,7 +21,10 @@ func downloadAll() {
 		done = d
 
 		for _, song := range songs {
-			process(song)
+			err := process(song)
+			if err != nil {
+				fmt.Printf("Error downloading %v\n", song.Name)
+			}
 		}
 	}
 }

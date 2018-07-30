@@ -5,14 +5,19 @@ import (
 	"sort"
 )
 
-func process(song Song) {
+func process(song Song) error {
 	// Check for song existing
 	i := sort.SearchStrings(existing, song.Key)
 	if i < len(existing) && existing[i] == song.Key {
 		fmt.Printf("%v already downloaded. Skipping...\n", song.Name)
-		return
+		return nil
 	}
 
 	fmt.Printf("Downloading %v\n", song.Name)
-	download(song.DownloadURL, song.Key, song.SHA1)
+	err := download(song.DownloadURL, song.Key, song.SHA1)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
