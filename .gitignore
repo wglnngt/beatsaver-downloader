@@ -1,2 +1,6 @@
 # Ignore binaries
 *.exe
+
+
+# Ignore CustomSongs
+CustomSongs/

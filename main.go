@@ -5,6 +5,13 @@ import (
 )
 
 func main() {
+	createDir()
+	loadExisting()
+
+	fmt.Printf("%v", existing)
+}
+
+func downloadAll() {
 	start := 0
 	done := false
 
