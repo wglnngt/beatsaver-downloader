@@ -5,6 +5,14 @@ import (
 )
 
 func main() {
-	response := fetch(0)
-	fmt.Printf("%v", len(response.Songs))
+	start := 0
+	done := false
+
+	for !done {
+		songs, next, d := fetch(start)
+		start = next
+		done = d
+
+		fmt.Printf("%v", songs)
+	}
 }

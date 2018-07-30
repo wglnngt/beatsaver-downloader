@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-func fetch(offset int) BeatSaver {
-	url := fmt.Sprintf("https://beatsaver.com/api/songs/new/%v", offset)
+func fetch(start int) ([]Song, int, bool) {
+	url := fmt.Sprintf("https://beatsaver.com/api/songs/new/%v", start)
 
 	bsClient := http.Client{
 		Timeout: time.Second * 2,
@@ -39,5 +39,9 @@ func fetch(offset int) BeatSaver {
 		log.Fatal(jsonErr)
 	}
 
-	return response
+	num := len(response.Songs)
+	next := num + start
+	done := num == 0
+
+	return response.Songs, next, done
 }
