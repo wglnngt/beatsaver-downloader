@@ -6,7 +6,7 @@ type Song struct {
 	Key         string `json:"key"`
 	Name        string `json:"name"`
 	DownloadURL string `json:"downloadUrl"`
-	MD5         string `json:"hashMd5"`
+	SHA1        string `json:"hashSha1"`
 }
 
 // BeatSaver Response Object
