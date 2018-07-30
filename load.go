@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 )
 
 const dir string = "CustomSongs"
@@ -31,4 +32,6 @@ func loadExisting() {
 			existing = append(existing, f.Name())
 		}
 	}
+
+	sort.Strings(existing)
 }

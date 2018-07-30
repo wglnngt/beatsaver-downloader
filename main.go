@@ -1,14 +1,10 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
 	createDir()
 	loadExisting()
 
-	fmt.Printf("%v", existing)
+	downloadAll()
 }
 
 func downloadAll() {
@@ -20,6 +16,8 @@ func downloadAll() {
 		start = next
 		done = d
 
-		fmt.Printf("%v", songs)
+		for _, song := range songs {
+			process(song)
+		}
 	}
 }
