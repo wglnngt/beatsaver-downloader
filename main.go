@@ -24,6 +24,7 @@ func downloadAll() {
 			err := process(song)
 			if err != nil {
 				fmt.Printf("[ERROR]       %v\n", song.Name)
+				fmt.Println(err)
 			}
 		}
 	}
