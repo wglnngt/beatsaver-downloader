@@ -33,10 +33,28 @@ func fetch(start int) ([]Song, int, bool) {
 		log.Fatal(readErr)
 	}
 
-	response := BeatSaver{}
-	jsonErr := json.Unmarshal(body, &response)
+	var response BeatSaver
+	respFirst := BeatSaver{}
+	jsonErr := json.Unmarshal(body, &respFirst)
 	if jsonErr != nil {
-		log.Fatal(jsonErr)
+		respAlt := BeatSaverAlt{}
+		jsonErr := json.Unmarshal(body, &respAlt)
+
+		if jsonErr != nil {
+			log.Fatal(jsonErr)
+		}
+
+		songs := []Song{}
+		for _, v := range respAlt.Songs {
+			songs = append(songs, v)
+		}
+
+		response = BeatSaver{
+			Total: respAlt.Total,
+			Songs: songs,
+		}
+	} else {
+		response = respFirst
 	}
 
 	num := len(response.Songs)
