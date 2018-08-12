@@ -70,7 +70,7 @@ func download(url string, key string, checksum string) error {
 		}()
 
 		path := filepath.Join(dest, f.Name)
-		os.MkdirAll(dest, os.ModeDir)
+		os.MkdirAll(dest, os.ModePerm)
 
 		if f.FileInfo().IsDir() {
 			os.MkdirAll(path, f.Mode())
