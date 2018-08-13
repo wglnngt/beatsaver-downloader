@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 )
@@ -18,19 +17,19 @@ func fetch(start int) ([]Song, int, bool) {
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
 	req.Header.Set("User-Agent", "beatsaver-downloader")
 
 	res, getErr := bsClient.Do(req)
 	if getErr != nil {
-		log.Fatal(getErr)
+		fatal(getErr)
 	}
 
 	body, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
-		log.Fatal(readErr)
+		fatal(readErr)
 	}
 
 	var response BeatSaver
@@ -41,7 +40,7 @@ func fetch(start int) ([]Song, int, bool) {
 		jsonErr := json.Unmarshal(body, &respAlt)
 
 		if jsonErr != nil {
-			log.Fatal(jsonErr)
+			fatal(jsonErr)
 		}
 
 		songs := []Song{}
