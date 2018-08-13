@@ -13,7 +13,7 @@ func fetch(start int) ([]Song, int, bool) {
 	url := fmt.Sprintf("https://beatsaver.com/api/songs/new/%v", start)
 
 	bsClient := http.Client{
-		Timeout: time.Second * 2,
+		Timeout: time.Second * 10,
 	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
