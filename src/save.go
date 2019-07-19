@@ -34,7 +34,7 @@ func saveMap(bmap BeatmapInfo) {
 		return
 	}
 
-	dest := filepath.Join(".", "CustomSongs", bmap.Key)
+	dest := filepath.Join(baseDir, bmap.Key)
 	extractAndWriteFile := func(f *zip.File) error {
 		rc, err := f.Open()
 		if err != nil {
