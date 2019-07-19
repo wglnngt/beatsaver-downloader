@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"runtime"
 	"time"
 
 	"github.com/briandowns/spinner"
-	"github.com/schollz/progressbar"
+	"github.com/gosuri/uiprogress"
 )
 
 var (
@@ -40,10 +41,28 @@ func main() {
 
 	s.FinalMSG = "Complete!\t\t\t\t\t\t\n"
 	s.Stop()
+	uiprogress.Start()
 
-	bar := progressbar.New(len(resp))
-	for i := 0; i < len(resp); i++ {
-		bar.Add(1)
-		time.Sleep(time.Millisecond)
+	count := len(resp)
+	bar := uiprogress.AddBar(count).AppendCompleted()
+	bar.PrependFunc(func(b *uiprogress.Bar) string {
+		return fmt.Sprintf("%v / %v", b.Current(), count)
+	})
+
+	concurrency := runtime.NumCPU()
+	sem := make(chan bool, concurrency)
+
+	for _, bmap := range resp {
+		sem <- true
+		go func(bmap BeatmapInfo) {
+			defer func() { <-sem }()
+
+			saveMap(bmap)
+			bar.Incr()
+		}(bmap)
+	}
+
+	for i := 0; i < cap(sem); i++ {
+		sem <- true
 	}
 }
