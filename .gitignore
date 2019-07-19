@@ -1,6 +1,13 @@
-# Ignore binaries
+# VSCode
+.vscode
+
+# Binaries
+build/
 *.exe
 
-
-# Ignore CustomSongs
+# Test Folders
+test/
 CustomSongs/
+
+# macOS Info
+.ds_store
